@@ -89,25 +89,29 @@ const MissionMonitoring = () => {
   };
 
   return (
-    <div className="flex h-screen">
-      <div className="w-1/3 p-6 bg-gray-50 overflow-y-auto">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">
+    <div className="flex flex-col h-screen md:flex-row">
+      {/* Sidebar */}
+      <div className="w-full md:w-1/3 p-4 bg-gray-50 overflow-y-auto">
+        <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-gray-800">
           Mission Control
         </h2>
+
+        {/* Mission Stats - Uncomment if needed */}
         {/* 
         {missionStats && (
-          <div className="bg-white shadow rounded-lg p-4 mb-6">
+          <div className="bg-white shadow rounded-lg p-4 mb-4 md:mb-6">
             <h3 className="font-semibold text-gray-600 mb-2">
               Mission Overview
             </h3>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2 text-sm">
               <div>Total Missions: {missionStats.totalMissions}</div>
               <div>In Progress: {missionStats.inProgress}</div>
               <div>Completed: {missionStats.completed}</div>
               <div>Aborted: {missionStats.aborted}</div>
             </div>
           </div>
-        )} */}
+        )}
+        */}
 
         <div className="space-y-4">
           {missions.map((mission) => (
@@ -121,11 +125,15 @@ const MissionMonitoring = () => {
         </div>
       </div>
 
-      <div className="w-2/3 flex flex-col">
-        <div ref={mapRef} className="h-1/2 bg-gray-200 overflow-clip" />
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+        <div
+          ref={mapRef}
+          className="h-[40vh] md:h-1/2 bg-gray-200 overflow-hidden"
+        />
 
         {selectedMission && (
-          <div className="h-1/2 p-6 overflow-y-auto">
+          <div className="h-[60vh] md:h-1/2 p-4 md:p-6 overflow-y-auto">
             <MissionDetails
               mission={selectedMission}
               onUpdate={async (updatedMission) => {

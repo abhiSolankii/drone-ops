@@ -251,144 +251,156 @@ const MissionPlanning = () => {
   };
 
   if (loading)
-    return <div className="text-gray-300 text-center">Loading...</div>;
+    return <div className="text-gray-300 text-center p-4">Loading...</div>;
   if (error)
-    return <div className="text-red-400 text-center">Error: {error}</div>;
+    return <div className="text-red-400 text-center p-4">Error: {error}</div>;
 
   return (
-    <div className="h-full flex text-white">
-      <div className="w-1/4 bg-gray-800 p-6 space-y-4">
-        <h2 className="text-2xl font-bold text-blue-400">Mission Planning</h2>
-        <div>
-          <label className="block text-sm font-medium text-gray-300">
-            Altitude (m)
-          </label>
-          <input
-            name="altitude"
-            value={params.altitude}
-            onChange={handleParamChange}
-            type="number"
-            className="mt-1 w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
-            placeholder="Altitude (m)"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-300">
-            Speed (m/s)
-          </label>
-          <input
-            name="speed"
-            value={params.speed}
-            onChange={handleParamChange}
-            type="number"
-            className="mt-1 w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
-            placeholder="Speed (m/s)"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-300">
-            Overlap (%)
-          </label>
-          <input
-            name="overlap"
-            value={params.overlap}
-            onChange={handleParamChange}
-            type="number"
-            className="mt-1 w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
-            placeholder="Overlap (%)"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-300">
-            Pattern
-          </label>
-          <select
-            name="pattern"
-            value={params.pattern}
-            onChange={handleParamChange}
-            className="mt-1 w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="crosshatch">Crosshatch</option>
-            <option value="parallel">Parallel</option>
-            <option value="perimeter">Perimeter</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-300">
-            Start Time
-          </label>
-          <input
-            name="startTime"
-            value={schedule.startTime}
-            onChange={handleScheduleChange}
-            type="datetime-local"
-            className="mt-1 w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        <div className="flex items-center space-x-2">
-          <input
-            name="isRecurring"
-            type="checkbox"
-            checked={schedule.isRecurring}
-            onChange={handleScheduleChange}
-            className="bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
-          />
-          <label className="text-sm font-medium text-gray-300">Recurring</label>
-        </div>
-        {schedule.isRecurring && (
+    <div className="flex flex-col md:flex-row h-screen text-white">
+      {/* Sidebar */}
+      <div className="w-full md:w-80 bg-gray-800 p-4 overflow-y-auto">
+        <h2 className="text-xl md:text-2xl font-bold text-blue-400 mb-4">
+          Mission Planning
+        </h2>
+
+        {/* Parameters */}
+        <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-300">
-              Frequency
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Altitude (m)
+            </label>
+            <input
+              name="altitude"
+              value={params.altitude}
+              onChange={handleParamChange}
+              type="number"
+              className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
+              placeholder="Altitude (m)"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Speed (m/s)
+            </label>
+            <input
+              name="speed"
+              value={params.speed}
+              onChange={handleParamChange}
+              type="number"
+              className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
+              placeholder="Speed (m/s)"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Overlap (%)
+            </label>
+            <input
+              name="overlap"
+              value={params.overlap}
+              onChange={handleParamChange}
+              type="number"
+              className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
+              placeholder="Overlap (%)"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Pattern
             </label>
             <select
-              name="frequency"
-              value={schedule.frequency}
-              onChange={handleScheduleChange}
-              className="mt-1 w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
+              name="pattern"
+              value={params.pattern}
+              onChange={handleParamChange}
+              className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
             >
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
+              <option value="crosshatch">Crosshatch</option>
+              <option value="parallel">Parallel</option>
+              <option value="perimeter">Perimeter</option>
             </select>
           </div>
-        )}
-        <div>
-          <label className="block text-sm font-medium text-gray-300">
-            Assign Drone
-          </label>
-          <select
-            value={selectedDrone}
-            onChange={handleDroneChange}
-            className="mt-1 w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="">No Drone</option>
-            {drones.map((d) => (
-              <option key={d._id} value={d._id}>
-                {d.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex gap-2 items-center w-full bg-yellow-500 text-black p-2 px-4 mt-6 rounded-lg">
-          <span>
-            <Info />
-          </span>
-          <p>
-            Please close the polygon by clicking the first point again on map.
-          </p>
-        </div>
-        <div className="flex gap-2 items-center w-full bg-yellow-500 text-black p-2 px-4 mt-6 rounded-lg">
-          <span>
-            <Info />
-          </span>
-          <p>Reload the page if map is not visible.</p>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Start Time
+            </label>
+            <input
+              name="startTime"
+              value={schedule.startTime}
+              onChange={handleScheduleChange}
+              type="datetime-local"
+              className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <input
+              name="isRecurring"
+              type="checkbox"
+              checked={schedule.isRecurring}
+              onChange={handleScheduleChange}
+              className="bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
+            />
+            <label className="text-sm font-medium text-gray-300">
+              Recurring
+            </label>
+          </div>
+
+          {schedule.isRecurring && (
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">
+                Frequency
+              </label>
+              <select
+                name="frequency"
+                value={schedule.frequency}
+                onChange={handleScheduleChange}
+                className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            </div>
+          )}
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Assign Drone
+            </label>
+            <select
+              value={selectedDrone}
+              onChange={handleDroneChange}
+              className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">No Drone</option>
+              {drones.map((d) => (
+                <option key={d._id} value={d._id}>
+                  {d.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Info Messages */}
+          <div className="space-y-2 mt-4">
+            <div className="flex items-center gap-2 bg-yellow-500 text-black p-2 rounded-lg text-sm">
+              <Info size={16} />
+              <p>Close the polygon by clicking the first point again on map.</p>
+            </div>
+            <div className="flex items-center gap-2 bg-yellow-500 text-black p-2 rounded-lg text-sm">
+              <Info size={16} />
+              <p>Reload the page if map is not visible.</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div
-        ref={mapRef}
-        className="w-3/4 bg-gray-900"
-        style={{ height: "calc(100vh - 64px)" }}
-      ></div>
+
+      {/* Map */}
+      <div ref={mapRef} className="flex-1 bg-gray-900 h-[50vh] md:h-auto"></div>
     </div>
   );
 };

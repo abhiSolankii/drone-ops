@@ -133,72 +133,97 @@ const Reports = () => {
   };
 
   if (loading)
-    return <div className="text-gray-300 text-center">Loading...</div>;
+    return <div className="text-gray-300 text-center p-4">Loading...</div>;
   if (error)
-    return <div className="text-red-400 text-center">Error: {error}</div>;
+    return <div className="text-red-400 text-center p-4">Error: {error}</div>;
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between">
-        <h1 className="text-2xl font-bold">Survey Reports</h1>
+    <div className="p-4 md:p-6 space-y-6 max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h1 className="text-xl md:text-2xl font-bold text-white">
+          Survey Reports
+        </h1>
         <button
           onClick={handleGenerate}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md"
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors w-full sm:w-auto"
         >
           Generate Report
         </button>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Mission Statistics</h2>
+
+      {/* Charts */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white p-4 rounded-lg shadow">
+          <h2 className="text-lg font-semibold mb-4">Mission Statistics</h2>
           {missionStats.length > 0 ? (
-            <BarChart width={500} height={300} data={missionStats}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="_id" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="count" fill="#3B82F6" name="Mission Count" />
-              <Bar
-                dataKey="avgProgress"
-                fill="#10B981"
-                name="Avg Progress (%)"
-              />
-            </BarChart>
+            <div className="overflow-x-auto">
+              <BarChart
+                width={Math.min(500, window.innerWidth - 40)}
+                height={300}
+                data={missionStats}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="_id" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="count" fill="#3B82F6" name="Mission Count" />
+                <Bar
+                  dataKey="avgProgress"
+                  fill="#10B981"
+                  name="Avg Progress (%)"
+                />
+              </BarChart>
+            </div>
           ) : (
             <p className="text-gray-500">No mission statistics available.</p>
           )}
         </div>
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Drone Statistics</h2>
+        <div className="bg-white p-4 rounded-lg shadow">
+          <h2 className="text-lg font-semibold mb-4">Drone Statistics</h2>
           {droneStats.length > 0 ? (
-            <BarChart width={500} height={300} data={droneStats}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="_id" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="count" fill="#8B5CF6" name="Drone Count" />
-              <Bar dataKey="avgBattery" fill="#F59E0B" name="Avg Battery (%)" />
-            </BarChart>
+            <div className="overflow-x-auto">
+              <BarChart
+                width={Math.min(500, window.innerWidth - 40)}
+                height={300}
+                data={droneStats}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="_id" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="count" fill="#8B5CF6" name="Drone Count" />
+                <Bar
+                  dataKey="avgBattery"
+                  fill="#F59E0B"
+                  name="Avg Battery (%)"
+                />
+              </BarChart>
+            </div>
           ) : (
             <p className="text-gray-500">No drone statistics available.</p>
           )}
         </div>
       </div>
-      <div className="bg-white rounded-lg shadow p-6">
+
+      {/* Reports List */}
+      <div className="bg-white rounded-lg shadow p-4 md:p-6">
         <h2 className="text-lg font-semibold mb-4">Recent Reports</h2>
         {reports.length === 0 ? (
           <p className="text-gray-500">No reports available.</p>
         ) : (
-          reports.map((report) => (
-            <ReportCard
-              key={report._id}
-              report={report}
-              onDownload={() => handleDownload(report._id)}
-              onDelete={() => handleDelete(report._id)}
-            />
-          ))
+          <div className="space-y-4">
+            {reports.map((report) => (
+              <ReportCard
+                key={report._id}
+                report={report}
+                onDownload={() => handleDownload(report._id)}
+                onDelete={() => handleDelete(report._id)}
+              />
+            ))}
+          </div>
         )}
       </div>
     </div>
