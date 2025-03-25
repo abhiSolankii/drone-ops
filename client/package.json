@@ -19,7 +19,6 @@
     "mapbox": "^1.0.0-beta10",
     "mapbox-gl": "^3.10.0",
     "ol": "^10.4.0",
-    "openlayers": "^4.6.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",
