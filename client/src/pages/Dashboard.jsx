@@ -85,7 +85,7 @@ const Dashboard = () => {
   ];
 
   if (loading)
-    return <div className="text-gray-300 text-center">Loading...</div>;
+    return <div className="text-gray-300 text-xl text-center">Loading...(It can take 30 second to load because backend is deployed on render free service. Please Wait)</div>;
   if (error)
     return <div className="text-red-400 text-center">Error: {error}</div>;
 
